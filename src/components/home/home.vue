@@ -115,7 +115,7 @@
                   </template>
                 </a-dropdown-button>
               </div>
-              <a-image :width="300" :src="post.imageurl" />
+              <a-image :width="300" :src="API + post.imageurl" />
             </div>
           </a-card>
           <a-button
@@ -143,7 +143,7 @@
                 </div>
                 <a-image
                   :width="100"
-                  :src="editPostValues.imageurl"
+                  :src="API + editPostValues.imageurl"
                   alt="avatar"
                 />
               </div>
@@ -192,6 +192,7 @@ import { usePostStore } from "../../Stores/post";
 import { useUserStore } from "../../Stores/user";
 import { storeToRefs } from "pinia";
 import { Modal } from "ant-design-vue";
+import API from "../../Services/api";
 
 const postStore = usePostStore();
 const userStore = useUserStore();

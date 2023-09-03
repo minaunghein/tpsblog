@@ -37,14 +37,12 @@ exports.getPost = async (req, res, next) => {
 exports.createPost = async (req, res, next) => {
   try {
     const body = req.body;
-    console.log(body);
-    console.log(req.file);
     const userid = req.user.id;
     let imagePath = "";
     if (req.file) {
       let url = req.protocol + "://" + req.get("host");
       url = url.endsWith("/") ? url : url + "/";
-      imagePath = url + "resources/images/" + req.file.filename;
+      imagePath = "/resources/images/" + req.file.filename;
     }
 
     if (!body.desc) {
