@@ -220,9 +220,8 @@ onMounted(() => {
   const token = localStorage.getItem("token");
   if (token) {
     userStore.setToken(token);
-    console.log(userStore.user);
-    loadData();
   }
+  loadData();
 });
 
 const handleFetchData = () => {
@@ -331,8 +330,8 @@ const handleEdit = () => {
   }
   console.log({ updateObj });
   postStore.updatePost(updateObj).then((res) => {
-  editPostValues.value = {};
-  editModalVisable.value = false;
+    editPostValues.value = {};
+    editModalVisable.value = false;
   });
 };
 </script>

@@ -53,6 +53,9 @@
           <a-form-item label="Confirm Password" name="confirmPassword">
             <a-input-password v-model:value="formState.confirmPassword" />
           </a-form-item>
+          <a-form-item v-if="errorMessage" label="Error" name="errormessage">
+            <span class="" style="color: red">{{ errorMessage }}</span>
+          </a-form-item>
 
           <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
             <a-button type="primary" html-type="submit">Register</a-button>
@@ -66,10 +69,13 @@
   </div>
 </template>
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useUserStore } from "../../Stores/user";
+import { useRouter } from "vue-router";
 
 const userStore = useUserStore();
+const router = useRouter();
+const errorMessage = ref(null);
 
 const formState = reactive({
   username: "",
@@ -125,7 +131,12 @@ async function passValidator(_rule, value) {
 
 const onFinish = (values) => {
   console.log("Success:", values);
-  userStore.register(values)
+  userStore
+    .register(values)
+    .then(() => {
+      router.push("/");
+    })
+    .catch((err) => (errorMessage.value = err.message));
 };
 
 const onFinishFailed = (errorInfo) => {

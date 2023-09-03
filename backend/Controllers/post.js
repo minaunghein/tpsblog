@@ -10,9 +10,10 @@ const AppError = require("../Utils/errorThrow");
 exports.getPost = async (req, res, next) => {
   try {
     const user = req.user;
+    console.log({ user });
     const pagesize = +req.query.pagesize;
     const page = +req.query.page;
-    const posts = await getAllPostByUser(user?.id, page, pagesize);
+    const posts = await getAllPostByUser(page, pagesize);
 
     const count = await countAllPost();
 
@@ -45,6 +46,7 @@ exports.createPost = async (req, res, next) => {
       url = url.endsWith("/") ? url : url + "/";
       imagePath = url + "resources/images/" + req.file.filename;
     }
+
     if (!body.desc) {
       throw new AppError("Please input description", 400);
     }

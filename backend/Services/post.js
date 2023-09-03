@@ -7,7 +7,7 @@ exports.getAllPost = () =>
     .sort({ updatedAt: -1 })
     .populate({ path: "userid", select: ["firstname", "lastname"] });
 
-exports.getAllPostByUser = (userid, page, pagesize) =>
+exports.getAllPostByUser = (page, pagesize) =>
   Post.aggregate([
     {
       $lookup: {
@@ -19,36 +19,36 @@ exports.getAllPostByUser = (userid, page, pagesize) =>
       },
     },
     { $unwind: "$userid" },
-    {
-      $lookup: {
-        from: Like.collection.name,
-        localField: "_id",
-        foreignField: "postid",
-        as: "likes",
-      },
-    },
-    {
-      $set: {
-        likeIndex: { $indexOfArray: ["$likes", userid] },
-      },
-    },
-    {
-      $set: {
-        isliked: {
-          $cond: {
-            if: { $eq: ["$likeIndex", -1] },
-            then: false,
-            else: true,
-          },
-        },
-        likes: { $size: "$likes" },
-      },
-    },
-    {
-      $project: {
-        likeIndex: 0,
-      },
-    },
+    // {
+    //   $lookup: {
+    //     from: Like.collection.name,
+    //     localField: "_id",
+    //     foreignField: "postid",
+    //     as: "likes",
+    //   },
+    // },
+    // {
+    //   $set: {
+    //     likeIndex: { $indexOfArray: ["$likes", userid] },
+    //   },
+    // },
+    // {
+    //   $set: {
+    //     isliked: {
+    //       $cond: {
+    //         if: { $eq: ["$likeIndex", -1] },
+    //         then: false,
+    //         else: true,
+    //       },
+    //     },
+    //     likes: { $size: "$likes" },
+    //   },
+    // },
+    // {
+    //   $project: {
+    //     likeIndex: 0,
+    //   },
+    // },
     { $sort: { updatedAt: -1 } },
     {
       $skip: pagesize * (page - 1),

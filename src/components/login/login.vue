@@ -13,11 +13,22 @@
           :rules="rules"
         >
           <a-form-item label="Username" name="username">
-            <a-input v-model:value="formState.username" />
+            <a-input
+              @input="clearError('username')"
+              v-model:value="formState.username"
+            />
           </a-form-item>
 
-          <a-form-item label="Password" name="password">
-            <a-input-password v-model:value="formState.password" />
+          <a-form-item
+            label="Password"
+            name="password"
+            :help="formErrors.password"
+            :validateStatus="formErrors.password ? 'error' : ''"
+          >
+            <a-input-password
+              @input="clearError('password')"
+              v-model:value="formState.password"
+            />
           </a-form-item>
 
           <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
@@ -32,13 +43,18 @@
   </div>
 </template>
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useUserStore } from "../../Stores/user";
-import {useRouter} from 'vue-router'
+import { useRouter } from "vue-router";
 
 const router = useRouter();
+const errorMessage = ref(null);
 
 const userStore = useUserStore();
+
+const formErrors = reactive({
+  password: "",
+});
 
 const formState = reactive({
   username: "",
@@ -71,11 +87,18 @@ async function passValidator(_rule, value) {
 }
 
 const onFinish = (values) => {
-  console.log("Success:", values);
-  userStore.login(values).then(() => router.push('/'));
+  userStore
+    .login(values)
+    .then(() => router.push("/"))
+    .catch(() => (formErrors.password = "Wrong username or password"));
 };
-
+const clearError = (fieldName) => {
+  formErrors[fieldName] = "";
+};
 const onFinishFailed = (errorInfo) => {
+  errorInfo.errorFields.map((err) => {
+    formErrors[err.name[0]] = err.errors[0];
+  });
   console.log("Failed:", errorInfo);
 };
 </script>
