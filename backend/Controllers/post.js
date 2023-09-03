@@ -85,9 +85,11 @@ exports.updatePost = async (req, res, next) => {
     const postid = req.params.id;
     console.log(req.file);
     if (req.file) {
+      let imagePath = "";
       let url = req.protocol + "://" + req.get("host");
       url = url.endsWith("/") ? url : url + "/";
-      body.imageurl = url + "resources/images/" + req.file.filename;
+      imagePath = "/resources/images/" + req.file.filename;
+      body.imageurl = imagePath;
     }
     const postService = PostService(postid);
     const findPost = await postService.findOnePost();

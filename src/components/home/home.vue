@@ -115,7 +115,13 @@
                   </template>
                 </a-dropdown-button>
               </div>
-              <a-image :width="300" :src="API + post.imageurl" />
+
+              <div v-if="post.imageurl !== ''">
+                <a-image
+                  :width="300"
+                  :src="post.imageurl ? API + post.imageurl : ''"
+                />
+              </div>
             </div>
           </a-card>
           <a-button
