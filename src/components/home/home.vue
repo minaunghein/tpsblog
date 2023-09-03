@@ -217,6 +217,7 @@ const previewImage = ref(null);
 const confirmLoading = ref(false);
 
 onMounted(() => {
+  postStore.clearPosts();
   const token = localStorage.getItem("token");
   if (token) {
     userStore.setToken(token);
@@ -313,7 +314,6 @@ const handleLogout = () => {
     cancelText: "Cancel",
     onOk() {
       userStore.logout();
-      // router.push("/login");
     },
   });
 };

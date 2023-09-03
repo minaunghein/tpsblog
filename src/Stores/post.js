@@ -64,5 +64,8 @@ export const usePostStore = defineStore("posts", {
         throw error;
       }
     },
+    clearPosts() {
+      this.posts = [];
+    },
   },
 });
