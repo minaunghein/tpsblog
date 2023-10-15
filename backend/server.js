@@ -25,6 +25,8 @@ app.use("/api/post", postRoute);
 
 app.use(errorHandler);
 
-app.listen(5002, () => {
-  console.log("server is running on port 3000");
+const PORT = 5200;
+
+app.listen(PORT, () => {
+  console.log(`server is running on port ${PORT}`);
 });
