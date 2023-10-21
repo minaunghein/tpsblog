@@ -24,7 +24,6 @@ app.use("/api/user", userRoute);
 app.use("/api/post", postRoute);
 
 app.use(errorHandler);
-
 const PORT = 5002;
 
 app.listen(PORT, () => {
