@@ -44,6 +44,47 @@ exports.login = async (req, res, next) => {
   }
 };
 
+/*
+const id = req.user.id;
+  // console.log(id)
+  const username = req.user.username;
+  const companyID = req.user.companyID;
+  User.findOne({
+    $or: [
+      { _id: id, companyID: companyID, deleted: false },
+      { username: username, companyID: companyID, deleted: false },
+    ],
+  })
+    .populate(["company"])
+    .then((document) => {
+      var data = document.toObject();
+
+      //Check user data efficiency
+      if (data.role == Role.Employee) {
+        data.isbiocomplete = false; //Need to check boolean value in UserSchema
+      } else data.isbiocomplete = true;
+
+      data.id = document._id;
+      return res.status(200).json({
+        message: ["User Info found!"],
+        data: data,
+      });
+    })
+    .catch((err) => {
+      return res.status(404).json({
+        error: [`${err.message}`],
+        message: "User Info fetching error!",
+      });
+    });*/
+
+exports.getUserInfo = async (req, res, next) => {
+  try {
+     
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.register = async (req, res, next) => {
   try {
     const body = req.body;

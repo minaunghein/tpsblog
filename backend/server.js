@@ -17,14 +17,14 @@ app.use(
   express.static(path.join(__dirname, "resources/images"))
 );
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.send("Hello World...");
 });
 
 app.use("/api/user", userRoute);
 app.use("/api/post", postRoute);
 
 app.use(errorHandler);
-
-app.listen(5002, () => {
-  console.log("server is running on port 3000");
+var defaultPort = 5300;
+app.listen(defaultPort, () => {
+  console.log("server is running on port " + defaultPort );
 });

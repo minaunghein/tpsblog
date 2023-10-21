@@ -37,6 +37,7 @@ exports.getPost = async (req, res, next) => {
 exports.createPost = async (req, res, next) => {
   try {
     const body = req.body;
+     
     const userid = req.user.id;
     let imagePath = "";
     if (req.file) {
@@ -47,6 +48,10 @@ exports.createPost = async (req, res, next) => {
 
     if (!body.desc) {
       throw new AppError("Please input description", 400);
+    }
+
+    if (!body.title) {
+      throw new AppError("Please input title", 400);
     }
     const post = await createPost({ ...body, imageurl: imagePath }, userid);
     await post.populate({ path: "userid", select: ["firstname", "lastname"] });
