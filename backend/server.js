@@ -18,6 +18,7 @@ app.use(
 );
 app.get("/", (req, res) => {
   res.send("Hello World...");
+  res.send("Hello World");
 });
 
 app.use("/api/user", userRoute);
@@ -27,4 +28,8 @@ app.use(errorHandler);
 var defaultPort = 5300;
 app.listen(defaultPort, () => {
   console.log("server is running on port " + defaultPort );
+const PORT = 5002;
+
+app.listen(PORT, () => {
+  console.log(`server is running on port ${PORT}`);
 });

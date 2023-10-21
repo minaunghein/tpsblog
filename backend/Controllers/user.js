@@ -8,6 +8,7 @@ const {
   registerValidate,
 } = require("../Services/user");
 const AppError = require("../Utils/errorThrow");
+const User = require("../Models/user");
 // throw new AppError()
 exports.login = async (req, res, next) => {
   try {
@@ -110,6 +111,24 @@ exports.register = async (req, res, next) => {
     if (error.code === 11000) {
       error.message = "Duplicate user";
     }
+    next(error);
+  }
+};
+
+exports.getUserInfo = async (req, res, next) => {
+  try {
+    const user = req.user;
+
+    const getUser = await User.findById(user.id);
+
+    if (!getUser) {
+      throw new AppError("User not found", 404);
+    }
+
+    const { password, ...userInfo } = getUser._doc;
+
+    return res.status(200).json({ data: userInfo });
+  } catch (error) {
     next(error);
   }
 };
