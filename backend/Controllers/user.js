@@ -83,7 +83,6 @@ exports.getUserInfo = async (req, res, next) => {
     if (!getUser) {
       throw new AppError("User not found", 404);
     }
-    console.log(getUser);
 
     const { password, ...userInfo } = getUser._doc;
 
