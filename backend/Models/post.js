@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const PostSchema = mongoose.Schema(
   {
+    title: String,
     desc: { type: String, required: true },
     userid: { type: mongoose.Schema.ObjectId, ref: "User", required: true },
     imageurl: { type: String },
