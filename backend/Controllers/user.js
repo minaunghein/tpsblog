@@ -78,13 +78,7 @@ const id = req.user.id;
       });
     });*/
 
-exports.getUserInfo = async (req, res, next) => {
-  try {
-     
-  } catch (error) {
-    next(error);
-  }
-};
+ 
 
 exports.register = async (req, res, next) => {
   try {
